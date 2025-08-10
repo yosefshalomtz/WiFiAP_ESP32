@@ -4,6 +4,7 @@ WifiAP::WifiAP(std::string ssid, std::string password, uint8_t max_stations)
 {
     this->ssid = ssid.empty() ?  "ESP32-AP" : ssid;
     this->password = password;
+    this->max_stations = max_stations;
 }
 
 void WifiAP::start()
@@ -61,4 +62,8 @@ std::string& WifiAP::getSSID() {
 }
 std::string& WifiAP::getPassword() {
     return this->password;
+}
+
+uint8_t WifiAP::getMaxStations() {
+    return this->max_stations;
 }

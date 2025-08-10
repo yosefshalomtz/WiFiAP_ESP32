@@ -35,4 +35,5 @@ public:
 
     std::string& getSSID();
     std::string& getPassword();
+    uint8_t getMaxStations();
 };
