@@ -5,7 +5,8 @@
 #include "nvs_flash.h"
 
 /**
- * c++ wrapper
+ * c++ wrapper for ESP32 WIFI
+ * note: you need to call esp_event_loop_create_default() before.
  * 
  */
 

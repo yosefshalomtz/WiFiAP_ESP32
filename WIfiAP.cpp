@@ -21,9 +21,6 @@ void WifiAP::start()
     }
     ESP_ERROR_CHECK(ret);
 
-    // Initialize the event loop needed by Wi-Fi
-    ESP_ERROR_CHECK(esp_event_loop_create_default());
-
     // Initialize underlying TCP/IP stack
     ESP_ERROR_CHECK(esp_netif_init());
 
