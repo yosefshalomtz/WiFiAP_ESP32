@@ -36,8 +36,8 @@ void WifiAP::start()
 
     // Configure Wi-Fi as Access Point
     wifi_config_t wifi_config = {};
-    std::strcpy(reinterpret_cast<char *>(wifi_config.ap.ssid), this->ssid.c_str());
-    std::strcpy(reinterpret_cast<char *>(wifi_config.ap.password), this->password.c_str());
+    strcpy(reinterpret_cast<char *>(wifi_config.ap.ssid), this->ssid.c_str());
+    strcpy(reinterpret_cast<char *>(wifi_config.ap.password), this->password.c_str());
     wifi_config.ap.ssid_len = 0;
     wifi_config.ap.max_connection = this->max_stations;
     wifi_config.ap.authmode = WIFI_AUTH_WPA_WPA2_PSK;

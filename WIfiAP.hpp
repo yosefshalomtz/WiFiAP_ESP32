@@ -1,4 +1,5 @@
 #pragma once
+#include <cstring>
 #include <string>
 #include "esp_wifi.h"
 #include "nvs_flash.h"
