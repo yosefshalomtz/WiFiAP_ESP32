@@ -1,7 +1,8 @@
-#include "WIfiAP.hpp"
+#include "WifiAP.hpp"
 
-WIfiAP::WIfiAP(std::string ssid, std::string password, uint8_t max_stations) : ssid(ssid), password(password), max_stations(max_stations)
+WifiAP::WifiAP(std::string ssid, std::string password, uint8_t max_stations)
 {
+    this->ssid = ssid.empty() ?  "ESP32-AP" : ssid;
     // Ensure the SSID and password are not empty
     if (this->ssid.empty())
     {
@@ -9,7 +10,7 @@ WIfiAP::WIfiAP(std::string ssid, std::string password, uint8_t max_stations) : s
     }
 }
 
-WIfiAP::start()
+void WifiAP::start()
 {
     // flash initialization
     esp_err_t ret = nvs_flash_init();
@@ -38,7 +39,7 @@ WIfiAP::start()
     std::strcpy(reinterpret_cast<char *>(wifi_config.ap.ssid), this->ssid.c_str());
     std::strcpy(reinterpret_cast<char *>(wifi_config.ap.password), this->password.c_str());
     wifi_config.ap.ssid_len = 0;
-    wifi_config.ap.max_connection = this->max_connections;
+    wifi_config.ap.max_connection = this->max_stations;
     wifi_config.ap.authmode = WIFI_AUTH_WPA_WPA2_PSK;
 
     if (this->password.length() == 0)
@@ -51,20 +52,20 @@ WIfiAP::start()
     this->status = WIFI_STATUS_RUNNING;
 }
 
-WIfiAP::stop()
+void WifiAP::stop()
 {
     ESP_ERROR_CHECK(esp_wifi_stop());
     this->status = WIFI_STATUS_STOPPED;
 }
 
-WIfiAP::getStatus()
+WIFI_STATUS WifiAP::getStatus()
 {
     return this->status;
 }
 
-WIfiAP::getSSID() {
+std::string& WifiAP::getSSID() {
     return this->ssid;
 }
-WIfiAP::getPassword() {
+std::string& WifiAP::getPassword() {
     return this->password;
 }
