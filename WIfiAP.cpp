@@ -3,11 +3,7 @@
 WifiAP::WifiAP(std::string ssid, std::string password, uint8_t max_stations)
 {
     this->ssid = ssid.empty() ?  "ESP32-AP" : ssid;
-    // Ensure the SSID and password are not empty
-    if (this->ssid.empty())
-    {
-        this->ssid = "ESP32-AP";
-    }
+    this->password = password;
 }
 
 void WifiAP::start()
