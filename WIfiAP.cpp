@@ -2,7 +2,7 @@
 
 WifiAP::WifiAP(std::string ssid, std::string password, uint8_t max_stations)
 {
-    this->ssid = ssid.empty() ?  "ESP32-AP" : ssid;
+    this->ssid = ssid.empty() ? "ESP32-AP" : ssid;
     this->password = password;
     this->max_stations = max_stations;
     // flash initialization
@@ -43,6 +43,20 @@ void WifiAP::start()
     ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_AP, &wifi_config));
     ESP_ERROR_CHECK(esp_wifi_start());
     this->status = WIFI_STATUS_RUNNING;
+
+    ESP_ERROR_CHECK(esp_event_handler_instance_register(
+        WIFI_EVENT,
+        WIFI_EVENT_AP_STACONNECTED,
+        &WifiAP::onConnect,
+        this,
+        nullptr));
+
+    ESP_ERROR_CHECK(esp_event_handler_instance_register(
+        WIFI_EVENT,
+        WIFI_EVENT_AP_STADISCONNECTED,
+        &WifiAP::onDisconnect,
+        this,
+        nullptr));
 }
 
 void WifiAP::stop()
@@ -56,13 +70,28 @@ WIFI_STATUS WifiAP::getStatus()
     return this->status;
 }
 
-std::string& WifiAP::getSSID() {
+std::string &WifiAP::getSSID()
+{
     return this->ssid;
 }
-std::string& WifiAP::getPassword() {
+std::string &WifiAP::getPassword()
+{
     return this->password;
 }
 
-uint8_t WifiAP::getMaxStations() {
+uint8_t WifiAP::getMaxStations()
+{
     return this->max_stations;
+}
+
+void WifiAP::onConnect(void *arg, esp_event_base_t event_base, int32_t event_id, void *event_data)
+{
+    WifiAP *self = static_cast<WifiAP *>(arg);
+    self->status = WIFI_STATUS_CONNECTED;
+}
+
+void WifiAP::onDisconnect(void *arg, esp_event_base_t event_base, int32_t event_id, void *event_data)
+{
+    WifiAP *self = static_cast<WifiAP *>(arg);
+    self->status = WIFI_STATUS_RUNNING;
 }

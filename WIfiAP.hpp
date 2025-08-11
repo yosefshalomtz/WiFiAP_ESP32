@@ -24,6 +24,9 @@ private:
     std::string password;
     uint8_t max_stations;
     WIFI_STATUS status = WIFI_STATUS_STOPPED;
+
+    static void onConnect(void* arg, esp_event_base_t event_base, int32_t event_id, void* event_data);
+    static void onDisconnect(void* arg, esp_event_base_t event_base, int32_t event_id, void* event_data);
 public:
     WifiAP(std::string ssid, std::string password, uint8_t max_stations);
 
