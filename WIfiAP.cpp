@@ -5,14 +5,7 @@ WifiAP::WifiAP(std::string ssid, std::string password, uint8_t max_stations)
     this->ssid = ssid.empty() ? "ESP32-AP" : ssid;
     this->password = password;
     this->max_stations = max_stations;
-    // flash initialization
-    esp_err_t ret = nvs_flash_init();
-    if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND)
-    {
-        ESP_ERROR_CHECK(nvs_flash_erase());
-        ret = nvs_flash_init();
-    }
-    ESP_ERROR_CHECK(ret);
+    // flash initialization is on caller side
 }
 
 void WifiAP::start()

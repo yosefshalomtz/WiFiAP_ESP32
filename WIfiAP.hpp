@@ -7,6 +7,7 @@
 /**
  * c++ wrapper for ESP32 WIFI
  * note: you need to call to esp_event_loop_create_default() before.
+ * also you need to initialize the NVS flash with nvs_flash_init() before using this class.
  * 
  */
 
